@@ -17,7 +17,6 @@ import java.util.Optional;
 
 import static org.e2cho.e2cho_HW.constant.LocationBoundary.*;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserLocationService {
