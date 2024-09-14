@@ -1,4 +1,4 @@
-package org.e2cho.e2cho_HW.dto;
+package org.e2cho.e2cho_HW.dto.user;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

@@ -3,7 +3,7 @@ package org.e2cho.e2cho_HW.domain.user;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.e2cho.e2cho_HW.dto.Registration;
+import org.e2cho.e2cho_HW.dto.user.Registration;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity

@@ -2,7 +2,7 @@ package org.e2cho.e2cho_HW.controller.user;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.e2cho.e2cho_HW.dto.Registration;
+import org.e2cho.e2cho_HW.dto.user.Registration;
 import org.e2cho.e2cho_HW.service.user.RegistrationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
