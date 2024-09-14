@@ -34,6 +34,9 @@ public enum ErrorType {
     // ----- Location ------
     OutOfBoundaryError(
             HttpStatus.BAD_REQUEST, "경위도가 범위(대한민국 내)를 벗어났습니다."
+    ),
+    UserLocationInfoNotFoundError(
+            HttpStatus.NOT_FOUND, "유저는 존재하지만, 유저의 위치 정보가 존재하지 않습니다."
     );
 
     private final HttpStatus httpStatus;
