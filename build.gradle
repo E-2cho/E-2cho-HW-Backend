@@ -44,6 +44,9 @@ dependencies {
 
 	// openFeign
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.0.2'
+
+	// Json in Java
+	implementation group: 'org.json', name: 'json', version: '20240303'
 }
 dependencyManagement {
 	imports {

@@ -1,6 +1,7 @@
 package org.e2cho.e2cho_HW.controller.weather;
 
 import lombok.RequiredArgsConstructor;
+import org.e2cho.e2cho_HW.dto.weather.ParticulateMatter;
 import org.e2cho.e2cho_HW.dto.weather.Weather;
 import org.e2cho.e2cho_HW.service.weather.WeatherService;
 import org.springframework.http.HttpStatus;
@@ -24,5 +25,13 @@ public class WeatherController {
 
         return new ResponseEntity<>(Weather.Response.createNewResponse(dto), HttpStatus.OK);
 
+    }
+
+    @GetMapping("/{id}/currentPM")
+    public ResponseEntity<ParticulateMatter.Response> getCurrentPM(@PathVariable("id") Long userId){
+
+        ParticulateMatter.Dto dto = weatherService.getCurrentPM(userId);
+
+        return new ResponseEntity<>(ParticulateMatter.Response.createNewResponse(dto), HttpStatus.OK);
     }
 }
