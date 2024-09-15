@@ -42,12 +42,6 @@ public class WeatherService {
 
     public ParticulateMatter.Dto getCurrentPM(Long userId){
 
-        // 0. 현재 날짜
-        String today = LocalDate.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd"));
-        String yesterday = LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("YYYY-MM-dd"));
-
-        log.info("오늘 날짜 : {}", today);
-
         // 1. 유저의 현재 위치 가져오기
         UserLocation foundUserLocation = userLocationRepository.findByUserId(userId);
 
@@ -61,8 +55,12 @@ public class WeatherService {
         // 2-2. 추출된 정보를 Data.Go.Kr 에서 조회한 정보와 상호작용할 수 있도록 준비
         String convertedCityName = locationUtilService.getConvertedCityName(cityName, districtName);
 
-        // 3. 미세먼지 정보 조회
-        DataGoKr.Result currentPM = null;
+        // 3. 미세먼지 정보 조회 (새벽 5시 이전이라면 전날 데이터를 조회 => 전날 오후 11시에 발표된 미세먼지 예보 데이터를 가져옴. 즉 오후 11시 ~ 익일 새벽 5시 사이의 공백을 채울 수 있음.)
+        DataGoKr.Result currentPM;
+
+        String today = LocalDate.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd"));
+
+        String yesterday = LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("YYYY-MM-dd"));
 
         if(LocalTime.now().isBefore(LocalTime.of(5,0))){
              currentPM = dataGoKrService.getCurrentPM(yesterday);
