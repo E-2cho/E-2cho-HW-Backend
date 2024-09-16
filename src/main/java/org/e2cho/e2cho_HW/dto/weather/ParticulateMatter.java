@@ -11,7 +11,7 @@ public class ParticulateMatter {
     @Builder
     public static class Dto{
 
-        private String regionName; // 지역명
+        private String cityName; // 지역명
 
         private String pmStatus; // 지역 미세먼지 등급
 
@@ -19,7 +19,7 @@ public class ParticulateMatter {
 
         public static Dto of(String regionName, String pmStatus, String updatedTime){
             return Dto.builder()
-                    .regionName(regionName)
+                    .cityName(regionName)
                     .pmStatus(pmStatus)
                     .updatedTime(updatedTime)
                     .build();
@@ -31,7 +31,7 @@ public class ParticulateMatter {
     @Builder
     public static class Response{
 
-        private String regionName;
+        private String cityName;
 
         private String pmStatus;
 
@@ -39,7 +39,7 @@ public class ParticulateMatter {
 
         public static Response createNewResponse(Dto dto){
             return Response.builder()
-                    .regionName(dto.getRegionName())
+                    .cityName(dto.getCityName())
                     .pmStatus(dto.getPmStatus())
                     .updatedTime(dto.updatedTime)
                     .build();

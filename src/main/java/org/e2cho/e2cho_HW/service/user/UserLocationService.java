@@ -2,7 +2,6 @@ package org.e2cho.e2cho_HW.service.user;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.e2cho.e2cho_HW.constant.ErrorType;
 import org.e2cho.e2cho_HW.domain.user.User;
 import org.e2cho.e2cho_HW.domain.user.UserLocation;
@@ -10,10 +9,9 @@ import org.e2cho.e2cho_HW.dto.user.Location;
 import org.e2cho.e2cho_HW.exception.CustomErrorException;
 import org.e2cho.e2cho_HW.repository.user.UserLocationRepository;
 import org.e2cho.e2cho_HW.repository.user.UserRepository;
+import org.e2cho.e2cho_HW.service.util.UserUtilService;
 import org.springframework.stereotype.Service;
 
-
-import java.util.Optional;
 
 import static org.e2cho.e2cho_HW.constant.LocationBoundary.*;
 
@@ -24,14 +22,13 @@ public class UserLocationService {
     private final UserRepository userRepository;
     private final UserLocationRepository userLocationRepository;
 
+    private final UserUtilService userUtilService;
+
     @Transactional
     public Location.Dto saveUserLocation(Long userId, Location.Request request){
 
-
         // 1. 경로변수로 넘겨받은 userId를 가진 유저가 존재하는지 검증
-        User foundUser = userRepository.findById(userId)
-                .orElseThrow(()-> new CustomErrorException(ErrorType.UserNotFoundError));
-
+        User foundUser = userUtilService.getValidateUser(userId);
 
         // 2. request 로 받은 경위도 검사
         if (!(EXTREME_SOUTH.getCoordinate() < request.getLatitude() && request.getLatitude() < EXTREME_NORTH.getCoordinate())

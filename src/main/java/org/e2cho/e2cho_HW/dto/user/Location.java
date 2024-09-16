@@ -17,10 +17,10 @@ public class Location {
     @Setter
     public static class Request{
 
-        @NotNull
+        @NotNull(message = "해당 값은 Null일 수 없습니다.")
         private Double latitude;
 
-        @NotNull
+        @NotNull(message = "해당 값은 Null일 수 없습니다.")
         private Double longitude;
     }
 

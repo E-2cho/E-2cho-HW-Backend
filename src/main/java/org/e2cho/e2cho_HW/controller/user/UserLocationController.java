@@ -1,6 +1,7 @@
 package org.e2cho.e2cho_HW.controller.user;
 
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.e2cho.e2cho_HW.dto.user.Location;
 import org.e2cho.e2cho_HW.service.user.UserLocationService;
@@ -17,7 +18,7 @@ public class UserLocationController {
 
     @PostMapping("/{id}/save")
     public ResponseEntity<Location.Response> saveUserLocation(
-            @RequestBody Location.Request request,
+            @Valid @RequestBody Location.Request request,
             @PathVariable("id") Long userId
     ) {
 

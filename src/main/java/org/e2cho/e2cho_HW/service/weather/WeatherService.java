@@ -8,6 +8,7 @@ import org.e2cho.e2cho_HW.dto.weather.OpenWeatherMap;
 import org.e2cho.e2cho_HW.dto.weather.ParticulateMatter;
 import org.e2cho.e2cho_HW.dto.weather.Weather;
 import org.e2cho.e2cho_HW.repository.user.UserLocationRepository;
+import org.e2cho.e2cho_HW.service.util.UserUtilService;
 import org.e2cho.e2cho_HW.service.util.LocationUtilService;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +25,16 @@ public class WeatherService {
 
     private final UserLocationRepository userLocationRepository;
 
+    private final UserUtilService userUtilService;
     private final OpenWeatherMapService openWeatherMapService;
     private final KakaoLocalService kakaoLocalService;
     private final DataGoKrService dataGoKrService;
     private final LocationUtilService locationUtilService;
 
     public Weather.Dto getCurrentWeather(Long userId){
+
+        // 0. 유저 검증
+        userUtilService.validateUser(userId);
 
         // 1. 유저의 현재 위치 가져오기
         UserLocation foundUserLocation = userLocationRepository.findByUserId(userId);
@@ -41,6 +46,9 @@ public class WeatherService {
     }
 
     public ParticulateMatter.Dto getCurrentPM(Long userId){
+
+        // 0. 유저 검증
+        userUtilService.validateUser(userId);
 
         // 1. 유저의 현재 위치 가져오기
         UserLocation foundUserLocation = userLocationRepository.findByUserId(userId);
