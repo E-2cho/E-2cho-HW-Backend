@@ -1,4 +1,4 @@
-package org.e2cho.e2cho_HW.service.weather;
+package org.e2cho.e2cho_HW.service.externalApi;
 
 import lombok.RequiredArgsConstructor;
 import org.e2cho.e2cho_HW.config.KakaoLocalClient;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class KakaoLocalService {
+public class KakaoLocalApiService {
 
     private final KakaoLocalClient kakaoLocalClient;
 

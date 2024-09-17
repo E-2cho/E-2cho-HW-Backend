@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.e2cho.e2cho_HW.dto.externalApi.OpenWeatherMap;
 
 import java.util.List;
 import java.util.stream.Collectors;

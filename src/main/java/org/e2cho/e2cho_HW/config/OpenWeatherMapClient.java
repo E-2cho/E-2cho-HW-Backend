@@ -1,6 +1,6 @@
 package org.e2cho.e2cho_HW.config;
 
-import org.e2cho.e2cho_HW.dto.weather.OpenWeatherMap;
+import org.e2cho.e2cho_HW.dto.externalApi.OpenWeatherMap;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
