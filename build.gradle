@@ -36,9 +36,22 @@ dependencies {
 	// MySQL
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// openFeign
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.0.2'
+
+	// Json in Java
+	implementation group: 'org.json', name: 'json', version: '20240303'
+}
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2023.0.1" // 버전 확인
+	}
 }
 
 tasks.named('test') {
