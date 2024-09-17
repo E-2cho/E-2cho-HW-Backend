@@ -1,4 +1,4 @@
-package org.e2cho.e2cho_HW.dto.weather;
+package org.e2cho.e2cho_HW.dto.externalApi;
 
 import lombok.Data;
 

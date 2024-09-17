@@ -3,11 +3,15 @@ package org.e2cho.e2cho_HW.service.weather;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.e2cho.e2cho_HW.domain.user.UserLocation;
-import org.e2cho.e2cho_HW.dto.weather.DataGoKr;
-import org.e2cho.e2cho_HW.dto.weather.OpenWeatherMap;
+import org.e2cho.e2cho_HW.dto.externalApi.DataGoKr;
+import org.e2cho.e2cho_HW.dto.externalApi.OpenWeatherMap;
 import org.e2cho.e2cho_HW.dto.weather.ParticulateMatter;
 import org.e2cho.e2cho_HW.dto.weather.Weather;
 import org.e2cho.e2cho_HW.repository.user.UserLocationRepository;
+import org.e2cho.e2cho_HW.service.externalApi.DataGoKrApiService;
+import org.e2cho.e2cho_HW.service.externalApi.KakaoLocalApiService;
+import org.e2cho.e2cho_HW.service.externalApi.OpenWeatherMapApiService;
+import org.e2cho.e2cho_HW.service.util.UserUtilService;
 import org.e2cho.e2cho_HW.service.util.LocationUtilService;
 import org.springframework.stereotype.Service;
 
@@ -24,29 +28,36 @@ public class WeatherService {
 
     private final UserLocationRepository userLocationRepository;
 
-    private final OpenWeatherMapService openWeatherMapService;
-    private final KakaoLocalService kakaoLocalService;
-    private final DataGoKrService dataGoKrService;
+    private final UserUtilService userUtilService;
+    private final OpenWeatherMapApiService openWeatherMapApiService;
+    private final KakaoLocalApiService kakaoLocalAPIService;
+    private final DataGoKrApiService dataGoKrAPIService;
     private final LocationUtilService locationUtilService;
 
     public Weather.Dto getCurrentWeather(Long userId){
+
+        // 0. 유저 검증
+        userUtilService.validateUser(userId);
 
         // 1. 유저의 현재 위치 가져오기
         UserLocation foundUserLocation = userLocationRepository.findByUserId(userId);
 
         // 2. 날씨 조회
-        OpenWeatherMap.Response currentWeather = openWeatherMapService.getCurrentWeather(foundUserLocation.getLatitude(), foundUserLocation.getLongitude());
+        OpenWeatherMap.Response currentWeather = openWeatherMapApiService.getCurrentWeather(foundUserLocation.getLatitude(), foundUserLocation.getLongitude());
 
         return Weather.Dto.fromOpenWeatherMap(currentWeather);
     }
 
     public ParticulateMatter.Dto getCurrentPM(Long userId){
 
+        // 0. 유저 검증
+        userUtilService.validateUser(userId);
+
         // 1. 유저의 현재 위치 가져오기
         UserLocation foundUserLocation = userLocationRepository.findByUserId(userId);
 
         // 2. 경위도를 대한민국 행정구역으로 변환
-        String kakaoResponse = kakaoLocalService.getRegionByCoordinates(foundUserLocation.getLatitude(), foundUserLocation.getLongitude());
+        String kakaoResponse = kakaoLocalAPIService.getRegionByCoordinates(foundUserLocation.getLatitude(), foundUserLocation.getLongitude());
 
         // 2-1. 응답에서 행정구역(시/도) 및 구역 정보 추출
         String cityName = locationUtilService.getCityName(kakaoResponse);
@@ -63,10 +74,10 @@ public class WeatherService {
         String yesterday = LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("YYYY-MM-dd"));
 
         if(LocalTime.now().isBefore(LocalTime.of(5,0))){
-             currentPM = dataGoKrService.getCurrentPM(yesterday);
+             currentPM = dataGoKrAPIService.getCurrentPM(yesterday);
 
         } else {
-             currentPM = dataGoKrService.getCurrentPM(today);
+             currentPM = dataGoKrAPIService.getCurrentPM(today);
         }
 
         // 3-1. 조회 결과 정보 업데이트 시간 확인

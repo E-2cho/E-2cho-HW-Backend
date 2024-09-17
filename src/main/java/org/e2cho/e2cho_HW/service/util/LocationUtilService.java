@@ -1,15 +1,29 @@
 package org.e2cho.e2cho_HW.service.util;
 
 import lombok.RequiredArgsConstructor;
+import org.e2cho.e2cho_HW.constant.ErrorType;
+import org.e2cho.e2cho_HW.exception.CustomErrorException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.e2cho.e2cho_HW.constant.LocationBoundary.*;
+import static org.e2cho.e2cho_HW.constant.LocationBoundary.EXTREME_EAST;
+
 @Service
 @RequiredArgsConstructor
 public class LocationUtilService {
+
+    public void validateLocation(double latitude, double longitude) {
+        if (!(EXTREME_SOUTH.getCoordinate() < latitude && latitude < EXTREME_NORTH.getCoordinate())
+                || !(EXTREME_WEST.getCoordinate() < longitude && longitude < EXTREME_EAST.getCoordinate())){
+
+            throw new CustomErrorException(ErrorType.OutOfBoundaryError);
+        }
+    }
+
 
     public String getCityName(String kakaoResponse){
 
