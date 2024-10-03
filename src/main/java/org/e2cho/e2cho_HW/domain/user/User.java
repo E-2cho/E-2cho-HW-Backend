@@ -3,7 +3,7 @@ package org.e2cho.e2cho_HW.domain.user;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.e2cho.e2cho_HW.dto.user.Registration;
+import org.e2cho.e2cho_HW.dto.user.NicknameRegistration;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -11,7 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Setter
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "users")
+@Table(name = "user")
 public class User {
 
     @Id
@@ -22,26 +22,21 @@ public class User {
     @Column(nullable = false)
     private String nickname; // 사용자 닉네임
 
-    @Column(nullable = false)
-    private String birthdate; // 사용자 생일
 
     @Builder
     public User(
             Long id,
-            String nickname,
-            String birthdate
+            String nickname
     ) {
         this.id = id;
         this.nickname = nickname;
-        this.birthdate = birthdate;
     }
 
     public static User registrationRequestToUser(
-            Registration.Request request
+            NicknameRegistration.Request request
     ) {
 
         return User.builder()
-                .birthdate(request.getBirthdate())
                 .nickname(request.getNickname())
                 .build();
     }
