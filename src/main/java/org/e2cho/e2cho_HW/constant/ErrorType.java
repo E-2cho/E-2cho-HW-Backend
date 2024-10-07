@@ -31,6 +31,11 @@ public enum ErrorType {
             HttpStatus.NOT_FOUND, "유저 정보를 찾을 수 없습니다."
     ),
 
+    // ---- Device ----
+    DeviceNotFoundError(
+            HttpStatus.NOT_FOUND, "기기 정보를 찾을 수 없습니다.."
+    ),
+
     // ----- Location ------
     OutOfBoundaryError(
             HttpStatus.BAD_REQUEST, "경위도가 범위(대한민국 내)를 벗어났습니다."
